@@ -2,7 +2,7 @@ library(GenomicRanges)
 library(parallel)
 library(data.table)
 library(dplyr)
-
+library(readr)
 
 ####################################
 # 1.make_prematrix_gb 
@@ -330,16 +330,25 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
     #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg19_manifest_addressA.rds") ##EPIC
     #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg19_manifest_addressA.rds") ##450K
     
-    if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
+    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
+    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
+    
+    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg19_manifest_addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg19_manifest_addressA.rds") ##450K
+    
     
   }
   
   if (Genome %in% "hg38"){
     #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg38_manifest_addressA.rds") ##EPIC
     #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg38_manifest_addressA.rds") ##450K
-    if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
+    
+    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds") ##EPIC
+    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
+    
+    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg38_manifest_addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg38_manifest_addressA.rds") ##450K
+    
   }
   
 
@@ -445,16 +454,23 @@ make_matrix_infinium_promoter <- function(LISTS,Genome,PLATFORM,starT,enD){
     #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg19_manifest_addressA.rds") ##EPIC
     #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg19_manifest_addressA.rds") ##450K
     
-    if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
+    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
+    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
+    
+    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg19_manifest_addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg19_manifest_addressA.rds") ##450K
   }
   
   if (Genome %in% "hg38"){
     #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg38_manifest_addressA.rds")  ##EPIC
     #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg38_manifest_addressA.rds") ##450K
     
-    if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds")  ##EPIC
-    if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
+    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds")  ##EPIC
+    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
+    
+    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg38_manifest_addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg38_manifest_addressA.rds") ##450K
+    
     
   }
   
