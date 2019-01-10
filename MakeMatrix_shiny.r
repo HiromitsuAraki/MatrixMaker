@@ -15,11 +15,6 @@ library(readr)
 make_prematrix_gb<-function(LISTS,Genome){
   
   #uploading gene annotation data
-  #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_gb_sorted")
-  #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_gb_sorted")
-  #if (Genome %in% "mm10") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm10_gb_sorted")
-  #if (Genome %in% "mm9")  gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm9_gb_sorted")
-
   if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
   if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
   if (Genome %in% "mm10") gb=fread("refGene_mm10_gb_sorted")
@@ -29,7 +24,7 @@ make_prematrix_gb<-function(LISTS,Genome){
   colnames(gb)=c("chr","start","end","strand","symbol")
   annotations_gr=with(gb, GRanges(chr, IRanges(start, end), strand=strand, symbol=symbol))
   annotations_gr=subset(annotations_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
-
+  
   
   d=c(1:length(LISTS))
   Cores=round(detectCores()/2,0)+1
@@ -39,7 +34,7 @@ make_prematrix_gb<-function(LISTS,Genome){
     df0=fread(LISTS[d])
     colnames(df0)=c("chr","start","end","strand","mC","C")
     gr=with(df0, GRanges(chr, IRanges(start, end), mC=mC, C=C, strand=strand))
-   
+    
     fO=findOverlaps(gr,annotations_gr,ignore.strand=TRUE)
     selectedregions=cbind(df0[attributes(fO)$from,])
     x=annotations_gr[attributes(fO)$to,]
@@ -93,11 +88,6 @@ make_prematrix_gb<-function(LISTS,Genome){
 make_prematrix_1stIntron<-function(LISTS,Genome){
   
   #uploading gene annotation data
-  #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_1stIntron")
-  #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_1stIntron")
-  #if (Genome %in% "mm10") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm10_1stIntron")
-  #if (Genome %in% "mm9")  gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm9_1stIntron")
-  
   if (Genome %in% "hg19") gb=fread("refGene_hg19_1stIntron")
   if (Genome %in% "hg38") gb=fread("refGene_hg38_1stIntron")
   if (Genome %in% "mm10") gb=fread("refGene_mm10_1stIntron")
@@ -171,11 +161,6 @@ make_prematrix_cgi<-function(LISTS,Genome){
   
   
   #uploading CGI annotation data
-  #if (Genome %in% "hg19") cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hg19_CGI")
-  #if (Genome %in% "hg38") cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hg38_CGI")
-  #if (Genome %in% "mm10") cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/mm10_CGI")
-  #if (Genome %in% "mm9")  cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/mm9_CGI")
-  
   if (Genome %in% "hg19") cgi=fread("hg19_CGI")
   if (Genome %in% "hg38") cgi=fread("hg38_CGI")
   if (Genome %in% "mm10") cgi=fread("mm10_CGI")
@@ -248,11 +233,6 @@ make_prematrix_cgi<-function(LISTS,Genome){
 make_prematrix_promoter<-function(LISTS,Genome,starT,enD){
   
   #uploading gene annotation data
-  #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_gb_sorted")
-  #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_gb_sorted")
-  #if (Genome %in% "mm10") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm10_gb_sorted")
-  #if (Genome %in% "mm9")  gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_mm9_gb_sorted")
-  
   if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
   if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
   if (Genome %in% "mm10") gb=fread("refGene_mm10_gb_sorted")
@@ -327,40 +307,22 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
   
   #loading genome coordinates of probe IDs
   if (Genome %in% "hg19"){
-    #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg19_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg19_manifest_addressA.rds") ##450K
-    
-    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
-    
-    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg19_manifest_addressA.rds") ##450K
-    
-    
+    if (PLATFORM ==2 ) Infinium=readRDS("EPIC.hg19.manifest.addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readRDS("hm450.hg19.manifest.addressA.rds") ##450K
   }
   
   if (Genome %in% "hg38"){
-    #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg38_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg38_manifest_addressA.rds") ##450K
-    
-    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
-    
-    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg38_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg38_manifest_addressA.rds") ##450K
-    
+    if (PLATFORM ==2 ) Infinium=readRDS("EPIC.hg38.manifest.addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readRDS("hm450.hg38.manifest.addressA.rds") ##450K
   }
   
-
+  
   #loading genomic feature coordinates
   if (FEATURE == 1){
     #loading CGI annotation data
-    #if (Genome %in% "hg19") cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hg19_CGI")
-    #if (Genome %in% "hg38") cgi=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hg38_CGI")
-    
     if (Genome %in% "hg19") cgi=fread("hg19_CGI")
     if (Genome %in% "hg38") cgi=fread("hg38_CGI")
-
+    
     colnames(cgi)=c("chr","start","end")
     annotations_gr=with(cgi, GRanges(chr, IRanges(start, end)))
     annotations_gr=subset(annotations_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
@@ -369,9 +331,6 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
   
   if (FEATURE == 2){
     #loading gb annotation data
-    #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_gb_sorted")
-    #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_gb_sorted")
-    
     if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
     if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
     
@@ -382,9 +341,6 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
   
   if (FEATURE == 3){
     #loading 1st intron annotation data
-    #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_1stIntron")
-    #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_1stIntron")
-
     if (Genome %in% "hg19") gb=fread("refGene_hg19_1stIntron")
     if (Genome %in% "hg38") gb=fread("refGene_hg38_1stIntron")
     
@@ -392,20 +348,20 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
     annotations_gr=with(gb, GRanges(chr, IRanges(start, end), strand=strand, symbol=symbol))
     annotations_gr=subset(annotations_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
   }
-
+  
   
   #loading methylome data (matrix)
   dm0=fread(LISTS[1])
   dm1_gr=Infinium[names(Infinium) %in% dm0$ID]
-
+  
   fO=findOverlaps(dm1_gr,annotations_gr,ignore.strand=TRUE) ###gr=query, annotations_gr=subject
   dm1_annotation=dm1_gr[attributes(fO)$from,]                  ### selection of data
   annotation_coordinates=annotations_gr[attributes(fO)$to,] ### selection of annotation
   
   dm1_annotation=data.frame(ranges(dm1_annotation),ID_REF=names(dm1_annotation))
-
+  
   z=cbind(as.data.frame(dm1_annotation),as.data.frame(annotation_coordinates))
-
+  
   if (FEATURE == 1){
     
     #z2=unique(z[,c(1,5,6,7)])
@@ -423,7 +379,7 @@ make_matrix_infinium <- function(LISTS,Genome,PLATFORM,FEATURE){
     targetloci=matrix(unlist(strsplit(as.matrix(xxx4[,1]), "__")),ncol=4,byrow=T)
     datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(xxx4[,c(2:ncol(xxx4))],2))
     return(na.omit(datamat))
-
+    
   }
   
   if (FEATURE > 1){
@@ -451,32 +407,15 @@ make_matrix_infinium_promoter <- function(LISTS,Genome,PLATFORM,starT,enD){
   
   #loading genome coordinates of probe IDs
   if (Genome %in% "hg19"){
-    #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg19_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg19_manifest_addressA.rds") ##450K
-    
-    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg19_manifest_addressA.rds") ##450K
-    
-    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg19_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg19_manifest_addressA.rds") ##450K
+    if (PLATFORM ==2 ) Infinium=readRDS("EPIC.hg19.manifest.addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readRDS("hm450.hg19.manifest.addressA.rds") ##450K
   }
   
   if (Genome %in% "hg38"){
-    #if (PLATFORM ==2 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/EPIC_hg38_manifest_addressA.rds")  ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/hm450_hg38_manifest_addressA.rds") ##450K
-    
-    #if (PLATFORM ==2 ) Infinium=readRDS("EPIC_hg38_manifest_addressA.rds")  ##EPIC
-    #if (PLATFORM ==3 ) Infinium=readRDS("hm450_hg38_manifest_addressA.rds") ##450K
-    
-    if (PLATFORM ==2 ) Infinium=readr::read_rds("EPIC_hg38_manifest_addressA.rds") ##EPIC
-    if (PLATFORM ==3 ) Infinium=readr::read_rds("hm450_hg38_manifest_addressA.rds") ##450K
-    
-    
+    if (PLATFORM ==2 ) Infinium=readRDS("EPIC.hg38.manifest.addressA.rds") ##EPIC
+    if (PLATFORM ==3 ) Infinium=readRDS("hm450.hg38.manifest.addressA.rds") ##450K
   }
   
-  
-  #if (Genome %in% "hg19") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg19_gb_sorted")
-  #if (Genome %in% "hg38") gb=fread("/Users/h_araki/projects/ICA/shiny/MakeMatrix3_forDrSangatsuda/refGene_hg38_gb_sorted")
   
   if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
   if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
@@ -486,7 +425,6 @@ make_matrix_infinium_promoter <- function(LISTS,Genome,PLATFORM,starT,enD){
   annotations_gb_gr=with(gb, GRanges(chr, IRanges(start, end), strand=strand, symbol=symbol))
   annotations_gb_gr=subset(annotations_gb_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
   annotations_gr=promoters(annotations_gb_gr,upstream=abs(starT),downstream=abs(enD))
-  
   
   
   #loading methylome data (matrix)
@@ -515,9 +453,6 @@ make_matrix_infinium_promoter <- function(LISTS,Genome,PLATFORM,starT,enD){
   targetloci=matrix(unlist(strsplit(as.matrix(xxx4[,1]), "__")),ncol=4,byrow=T)
   datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(xxx4[,c(2:ncol(xxx4))],2))
   return(na.omit(datamat))
-
+  
 }
-
-
-
 
