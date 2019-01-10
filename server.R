@@ -16,7 +16,8 @@ shinyInput <- function(FUN, len, id, ...) {
 
 # Source MakeMatrix ----
 source("MakeMatrix_shiny.R")
-
+EPIC_hg19=readRDS("EPIC.hg19.manifest.addressA.rds")
+hg19_gb=readRDS("refGene_hg19_gb_sorted.rds")
 
 ###Server
 shinyServer(function(input, output, session) {
@@ -24,7 +25,7 @@ shinyServer(function(input, output, session) {
   
   roots=c('/'='/')
   shinyDirChoose(input,'directory',roots=c('/'='/'))
-  
+
   observeEvent(input$submit,
                {
                  
