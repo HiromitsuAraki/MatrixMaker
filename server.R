@@ -36,11 +36,13 @@ shinyServer(function(input, output, session) {
                  
                  ##ここから
                  
-                 
+                 currentdirectory=getwd()
                  roots=c('/'='/')
                  mydirectory = parseDirPath(roots, input$directory)
-                 #setwd(mydirectory)
+                 setwd(mydirectory)
                  myfiles = list.files(mydirectory)
+                 setwd(currentdirectory)
+                 
                  #Myfiles=paste(mydirectory,myfiles,sep="/")
                  
                  #output$MethMat=renderDataTable(make_prematrix(myfiles))
