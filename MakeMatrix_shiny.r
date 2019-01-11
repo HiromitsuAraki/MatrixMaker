@@ -12,13 +12,13 @@ library(readr)
 # 5.make_matrix_infinium_promoter
 ####################################
 
-make_prematrix_gb<-function(LISTS,Genome){
+make_prematrix_gb<-function(LISTS,Genome,gb){
   
   #uploading gene annotation data
-  if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
-  if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
-  if (Genome %in% "mm10") gb=fread("refGene_mm10_gb_sorted")
-  if (Genome %in% "mm9")  gb=fread("refGene_mm9_gb_sorted")
+  #if (Genome %in% "hg19") gb=fread("refGene_hg19_gb_sorted")
+  #if (Genome %in% "hg38") gb=fread("refGene_hg38_gb_sorted")
+  #if (Genome %in% "mm10") gb=fread("refGene_mm10_gb_sorted")
+  #if (Genome %in% "mm9")  gb=fread("refGene_mm9_gb_sorted")
   
   #generation of GRanges oject for gene annotation data  
   colnames(gb)=c("chr","start","end","strand","symbol")

@@ -36,26 +36,27 @@ shinyServer(function(input, output, session) {
                  
                  ##ここから
                  
-                 currentdirectory=getwd()
-                 roots=c('/'='/')
-                 mydirectory = parseDirPath(roots, input$directory)
-                 setwd(mydirectory)
-                 myfiles = list.files(mydirectory)
-                 setwd(currentdirectory)
-                 
-                 #Myfiles=paste(mydirectory,myfiles,sep="/")
-                 
-                 #output$MethMat=renderDataTable(make_prematrix(myfiles))
-                 
+                 #roots=c('/'='/')
+                 #mydirectory = parseDirPath(roots, input$directory)
+                 #setwd(mydirectory)
+                 #myfiles = list.files(mydirectory)
+
                  withProgress(message = 'In progress', {
-                   #MethMat=make_prematrix(myfiles)
+
+                   gb=fread("refGene_hg38_gb_sorted")
+                   
+                   roots=c('/'='/')
+                   mydirectory = parseDirPath(roots, input$directory)
+                   setwd(mydirectory)
+                   myfiles = list.files(mydirectory)
+                   
                    if (input$checkPlatform==1){
                      if (input$checkFeature==1){
                        MethMat=make_prematrix_cgi(myfiles,as.character(input$checkGenome))
                      }
                      
                      if (input$checkFeature==2){
-                       MethMat=make_prematrix_gb(myfiles,as.character(input$checkGenome))                     
+                       MethMat=make_prematrix_gb(myfiles,as.character(input$checkGenome),gb)                     
                      }
 
                      if (input$checkFeature==3){
