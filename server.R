@@ -39,7 +39,7 @@ shinyServer(function(input, output, session) {
                  
                  roots=c('/'='/')
                  mydirectory = parseDirPath(roots, input$directory)
-                 setwd(mydirectory)
+                 #setwd(mydirectory)
                  myfiles = list.files(mydirectory)
                  #Myfiles=paste(mydirectory,myfiles,sep="/")
                  
