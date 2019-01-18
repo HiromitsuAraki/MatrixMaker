@@ -1,6 +1,6 @@
 # MatrixMaker
 ## GUI tool for converting methyole data to a data matrix compatible with Methylica
-*MatrixMaker* is a GUI-based tool for converts user's methylome data to a data matrix compatible with *[Methylica]*(https://github.com/HiromitsuAraki/Methylica).
+*MatrixMaker* is a GUI-based tool for converts user's methylome data to a data matrix compatible with [*Methylica*](https://github.com/HiromitsuAraki/Methylica).
 
 ## Install/Launch MatrixMaker
 1.  Install [R environment](https://www.r-project.org/)
