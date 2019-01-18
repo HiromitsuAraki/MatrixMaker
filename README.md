@@ -1,5 +1,5 @@
 # MatrixMaker
-## GUI tool for converting methyole data to  to a data matrix compatible with [Methylica](https://github.com/HiromitsuAraki/Methylica)
+## GUI tool for converting methyole data to a data matrix compatible with [Methylica](https://github.com/HiromitsuAraki/Methylica)
 *MatrixMaker* is a GUI-based tool for converts user's methylome data to a data matrix compatible with *Methylica*. *Methylica* not only provides ICA-based sample clustering but identifies independent components (ICs), or methylomic signatures, specific to various subsets of the samples. Major contributors to a subset-specific IC serve as methylation markers of the subset and imply biological processes underlying the IC. *Methylica* would thus be a powerful tool to analyze samples composed of multiple subtypes, such as those of cancers.
 <br>
 
