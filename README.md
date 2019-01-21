@@ -29,7 +29,7 @@ The following R code will launch *MatrixMaker*.
 
 ## Implementations
 ### Data uploading and parameter setting
-*MatrixMaker* requires methylome data as its inputs. Please refer **Input file format** about the file format of methylome data. As for the data uploading, users need to prepare and select a directory or folder in which only BED format files or *Methylation Profile table* are stored. Following directory selection, *MatrixMaker* requests its users to select platform users used, species with its reference genome version used in sequence alignment, and genomic elements (CpG island, gene body, first intron and promoter). When users selcet promoter as feature, users can decide promoter regions from -10,000 to -1 as start and from 0 to 10,000 as end. Finaly, users need to press "Submit" button to generate data matrix *for Methylica*.
+*MatrixMaker* requires methylome data as its inputs. Please refer **Input file format** about the file format of methylome data. First, users need to assign a directory or folder in which only BED format files or *Methylation Profile table* are stored. Following directory assignment, *MatrixMaker* requests its users to choose platform users used, species with its reference genome version used in sequence alignment, and genomic elements (CpG island, gene body, first intron and promoter). When users choose promoter as genomic element, users can decide promoter regions from -10,000 to -1 and from 0 to 10,000 as promoter start and ende respectively. Finaly, users need to press "Submit" button to generate methylome data matrix for *Methylica*.
 
 <img src="./README_files/Figures/MatrixMaker.png" width=500x500>
 <br>
