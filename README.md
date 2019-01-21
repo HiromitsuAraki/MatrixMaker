@@ -33,12 +33,8 @@ requires methylome data and sample metadata as its inputs. The former is a matri
 ### Data uploading
 *MatrixMaker* requires methylome data and sample metadata as its inputs. Please refer **Input file format** about the file format of methylome data and sample metadata for *Methylica*. Users need to assign the file location from a browser as below.
 
-<img src="./README_files/Figures/MatrixMaker.png" width=400x400>
+<img src="./README_files/Figures/MatrixMaker.png" width=500x500>
 <br>
 
 ### Parameter setting
 Following data upload, *Methylica* requests its users to select species with its reference genome version, genomic elements to be analyzed (CpG island, gene body, first intron and promoter), and k or the number of ICs (minimum = 2; maximum = the number of samples). *Methylica* provides a default setting of k, defined as the first k components whose cumulative contribution ratio exceeds 80% in principal component analysis. When users select all parameters, users need to press "Run" button to start analysis.
-
-<img src="./README_files/Figures/Parameters.png" width=300x300>
-<br>
-
