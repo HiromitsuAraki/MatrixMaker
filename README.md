@@ -12,21 +12,19 @@ The following R code will launch *MatrixMaker*.
 <br>
 
 ## Input file format
-*MatrixMaker* accepts two types of methylome data, which are sequence-based methylome data, such as sequence-based methylome data, such as whole-genome bisulfite sequencing (WGBS) or Reduced Representation Bisulfite Sequencing (RRBS), and Infinium methylation array data (MethylationEPIC and 450k). 
-
-
-requires methylome data and sample metadata as its inputs. The former is a matrix of methylation levels, rows and columns of which correspond to genomic regions and samples, respectively. The latter is a tab-delimited text file, rows and columns of which correspond to samples and features, respectively.
+*MatrixMaker* accepts two types of methylome data, which are sequence-based methylome data, such as whole-genome bisulfite sequencing (WGBS) or Reduced Representation Bisulfite Sequencing (RRBS), and Infinium methylation array data (MethylationEPIC and 450k). Each data format is shown as below.
 - Seuqence-basd methylome data
   - 1st column: Chr
   - 2nd column: Start
   - 3rd column: End
-  - 4th column: Gene symbol
-  - 5th column ~ : Methylome data of each sample
+  - 4th column: Strand
+  - 5th column: Methylated reads
+  - 6th column: Total reads
   <br>
 - Infinium methylation array data
-  - 1st column: Sample ID
-  - 2nd column ~ : Status of the features (e.g. cancer subtype, stage, gender)  
-  **NOTE: The status of the features should be discrete, as *Methylica* cannot accept metadata with continuous values (e.g. age, tumor size, and survival date).**  
+  - 1st column: Target ID
+  - 2nd column ~ : beta value
+  
 <br>
 
 ## Implementations
