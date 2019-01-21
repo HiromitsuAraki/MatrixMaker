@@ -29,9 +29,9 @@ The following R code will launch *MatrixMaker*.
 
 ## Implementations
 ### Data uploading and parameter setting
-*MatrixMaker* requires methylome data as its inputs. Please refer **Input file format** about the file format of methylome data. In order to upload methylome data, users prepare a directory 
+*MatrixMaker* requires methylome data as its inputs. Please refer **Input file format** about the file format of methylome data. As for the data uploading, users need to prepare and select a directory or folder in which only BED format files or *Methylation Profile table* are stored. Following data upload, 
 
-Following data upload, *Methylica* requests its users to select species with its reference genome version, genomic elements to be analyzed (CpG island, gene body, first intron and promoter), and k or the number of ICs (minimum = 2; maximum = the number of samples). *Methylica* provides a default setting of k, defined as the first k components whose cumulative contribution ratio exceeds 80% in principal component analysis. When users select all parameters, users need to press "Run" button to start analysis.
+*MatrixMaker* requests its users to select species with its reference genome version, genomic elements (CpG island, gene body, first intron and promoter). and k or the number of ICs (minimum = 2; maximum = the number of samples). *Methylica* provides a default setting of k, defined as the first k components whose cumulative contribution ratio exceeds 80% in principal component analysis. When users select all parameters, users need to press "Run" button to start analysis.
 
 <img src="./README_files/Figures/MatrixMaker.png" width=500x500>
 <br>
