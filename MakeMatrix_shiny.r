@@ -278,7 +278,8 @@ make_prematrix_promoter<-function(LISTS,gf,starT,enD){
 }
 
 
-make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
+
+make_matrix_infinium_cgi <- function(LISTS,gf,Infinium,FEATURE){
 
   #loading genomic feature coordinates
   colnames(gf)=c("chr","start","end")
@@ -290,14 +291,14 @@ make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
   dm1_gr=Infinium[names(Infinium) %in% dm0$ID]
   
   fO=findOverlaps(dm1_gr,annotations_gr,ignore.strand=TRUE) ###gr=query, annotations_gr=subject
-  dm1_annotation=dm1_gr[attributes(fO)$from,]                  ### selection of data
+  dm1_annotation=dm1_gr[attributes(fO)$from,]               ### selection of data
   annotation_coordinates=annotations_gr[attributes(fO)$to,] ### selection of annotation
   
   dm1_annotation=data.frame(ranges(dm1_annotation),ID_REF=names(dm1_annotation))
   
   z=cbind(as.data.frame(dm1_annotation),as.data.frame(annotation_coordinates))
   
-  if (FEATURE == 1){
+
     
     #z2=unique(z[,c(1,5,6,7)])
     z2=unique(z[,c(5,6,7,8)])
@@ -315,12 +316,34 @@ make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
     datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(xxx4[,c(2:ncol(xxx4))],2))
     return(na.omit(datamat))
     
-  }
   
-  if (FEATURE > 1){
+}
+
+
+
+#gene body or 1st intron
+make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
+  
+  #loading genomic feature coordinates
+  colnames(gf)=c("chr","start","end","strand","symbol")
+  annotations_gr=with(gf, GRanges(chr, IRanges(start, end), strand=strand, symbol=symbol))
+  annotations_gr=subset(annotations_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
+  
+  #loading methylome data (matrix)
+  dm0=fread(LISTS[1])
+  dm1_gr=Infinium[names(Infinium) %in% dm0$ID]
+  
+  fO=findOverlaps(dm1_gr,annotations_gr,ignore.strand=TRUE) ###gr=query, annotations_gr=subject
+  dm1_annotation=dm1_gr[attributes(fO)$from,]               ### selection of data
+  annotation_coordinates=annotations_gr[attributes(fO)$to,] ### selection of annotation
+  
+  dm1_annotation=data.frame(ranges(dm1_annotation),ID_REF=names(dm1_annotation))
+  
+  z=cbind(as.data.frame(dm1_annotation),as.data.frame(annotation_coordinates))
+  
     
     #z2=unique(z[,c(1,5,6,7,10)])
-    z2=unique(z[,c(5,6,1,2,11)])
+    z2=unique(z[,c(5,6,7,8,11)])
     xxx2=merge(z2,dm0,by.x="ID_REF",by.y="ID",all = F)
     xxx2=data.frame(loci=paste(xxx2$seqnames,xxx2$start,xxx2$end,xxx2$symbol,sep="__"),xxx2)
     xxx3=xxx2[,c(1,7:ncol(xxx2))]
@@ -333,9 +356,9 @@ make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
     targetloci=matrix(unlist(strsplit(as.matrix(xxx4[,1]), "__")),ncol=4,byrow=T)
     datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(xxx4[,c(2:ncol(xxx4))],2))
     return(na.omit(datamat))
-  }
   
 }
+
 
 
 make_matrix_infinium_promoter <- function(LISTS,gf,Infinium,starT,enD){
