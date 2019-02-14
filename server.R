@@ -102,10 +102,22 @@ shinyServer(function(input, output, session) {
                    }
                    
                    if (input$checkPlatform>=2){
-                     if (input$checkFeature<=3){
+                     
+                     if (input$checkFeature==1){
+                       #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
+                       MethMat=make_matrix_infinium_cgi(myfiles,gf,Infinium,input$checkFeature)
+                     }
+                     
+                     if (input$checkFeature==2){
                        #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
                        MethMat=make_matrix_infinium(myfiles,gf,Infinium,input$checkFeature)
                      }
+                     
+                     if (input$checkFeature==3){
+                       #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
+                       MethMat=make_matrix_infinium(myfiles,gf,Infinium,input$checkFeature)
+                     }
+
                      
                      if (input$checkFeature==4){
                        #MethMat=make_matrix_infinium_promoter(myfiles,as.character(input$checkGenome),gf,input$checkPlatform, input$PromoterStart,input$PromoterEnd)
