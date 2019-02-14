@@ -359,8 +359,6 @@ make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
   
 }
 
-
-
 make_matrix_infinium_promoter <- function(LISTS,gf,Infinium,starT,enD){
   
   #loading genomic feature coordinates
@@ -380,8 +378,7 @@ make_matrix_infinium_promoter <- function(LISTS,gf,Infinium,starT,enD){
   dm1_annotation=data.frame(ranges(dm1_annotation),ID_REF=names(dm1_annotation))
   z=cbind(as.data.frame(dm1_annotation),as.data.frame(annotation_coordinates))
   
-  #z2=unique(z[,c(1,5,6,7,10)])
-  z2=unique(z[,c(5,6,1,2,11)])
+  z2=unique(z[,c(5,6,7,8,11)])
   
   xxx2=merge(z2,dm0,by.x="ID_REF",by.y="ID",all = F)
   xxx2=data.frame(loci=paste(xxx2$seqnames,xxx2$start,xxx2$end,xxx2$symbol,sep="__"),xxx2)
@@ -397,4 +394,5 @@ make_matrix_infinium_promoter <- function(LISTS,gf,Infinium,starT,enD){
   return(na.omit(datamat))
   
 }
+
 
