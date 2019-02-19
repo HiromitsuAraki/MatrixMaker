@@ -30,47 +30,37 @@ shinyServer(function(input, output, session) {
                  withProgress(message = 'In progress', {
 
                    #annotation load
-                   if (as.character(input$checkGenome)=="hg38"){
-                     if (input$checkFeature==1)  gf=fread("./annotation/hg38_CGI")
-                     if (input$checkFeature==2)  gf=fread("./annotation/refGene_hg38_gb_sorted")
-                     
-                     #if (input$checkFeature>=3)  gf=fread("./annotation/refGene_hg38_1stIntron")
-                     if (input$checkFeature==3)  gf=fread("./annotation/refGene_hg38_1stIntron")
-                     if (input$checkFeature==4)  gf=fread("./annotation/refGene_hg38_gb_sorted")
-                     
-                     
+                  if (as.character(input$checkGenome)=="hg38"){
+                     if (input$checkFeature<=2)  gf=fread("./annotation/hg38_CGI")
+                     if (input$checkFeature==3)  gf=fread("./annotation/refGene_hg38_gb_sorted")
+                     if (input$checkFeature==4)  gf=fread("./annotation/refGene_hg38_1stIntron")
+                     if (input$checkFeature==5)  gf=fread("./annotation/refGene_hg38_gb_sorted")
                      if (input$checkPlatform==2) Infinium=readRDS("./annotation/EPIC.hg38.manifest.addressA.rds")
                      if (input$checkPlatform==3) Infinium=readRDS("./annotation/hm450.hg38.manifest.addressA.rds")
                    }
                    
                    if (as.character(input$checkGenome)=="hg19"){
-                     if (input$checkFeature==1)  gf=fread("./annotation/hg19_CGI")
-                     if (input$checkFeature==2)  gf=fread("./annotation/refGene_hg19_gb_sorted")
-                     
-                     #if (input$checkFeature>=3)  gf=fread("./annotation/refGene_hg19_1stIntron")
-                     if (input$checkFeature==3)  gf=fread("./annotation/refGene_hg19_1stIntron")
-                     if (input$checkFeature==4)  gf=fread("./annotation/refGene_hg19_gb_sorted")
-             
+                     if (input$checkFeature<=2)  gf=fread("./annotation/hg19_CGI")
+                     if (input$checkFeature==3)  gf=fread("./annotation/refGene_hg19_gb_sorted")
+                     if (input$checkFeature==4)  gf=fread("./annotation/refGene_hg19_1stIntron")
+                     if (input$checkFeature==5)  gf=fread("./annotation/refGene_hg19_gb_sorted")
                      if (input$checkPlatform==2) Infinium=readRDS("./annotation/EPIC.hg19.manifest.addressA.rds")
                      if (input$checkPlatform==3) Infinium=readRDS("./annotation/hm450.hg19.manifest.addressA.rds")
                    }
       
                    if (as.character(input$checkGenome)=="mm10"){
-                     if (input$checkFeature==1) gf=fread("./annotation/mm10_CGI")
-                     if (input$checkFeature==2) gf=fread("./annotation/refGene_mm10_gb_sorted")
-                    # if (input$checkFeature>=3) gf=fread("./annotation/refGene_mm10_1stIntron")
-                      if (input$checkFeature==3) gf=fread("./annotation/refGene_mm10_1stIntron")
-                      if (input$checkFeature==4) gf=fread("./annotation/refGene_mm10_gb_sorted")
+                     if (input$checkFeature<=2) gf=fread("./annotation/mm10_CGI")
+                     if (input$checkFeature==3) gf=fread("./annotation/refGene_mm10_gb_sorted")
+                     if (input$checkFeature==4) gf=fread("./annotation/refGene_mm10_1stIntron")
+                     if (input$checkFeature==5) gf=fread("./annotation/refGene_mm10_gb_sorted")
                    }
                   
                    if (as.character(input$checkGenome)=="mm9"){
-                     if (input$checkFeature==1) gf=fread("./annotation/mm9_CGI")
-                     if (input$checkFeature==2) gf=fread("./annotation/refGene_mm9_gb_sorted")
-                     #if (input$checkFeature>=3) gf=fread("./annotation/refGene_mm9_1stIntron")
-                     if (input$checkFeature==3) gf=fread("./annotation/refGene_mm9_1stIntron")
-                     if (input$checkFeature==4) gf=fread("./annotation/refGene_mm9_gb_sorted")
+                     if (input$checkFeature<=2) gf=fread("./annotation/mm9_CGI")
+                     if (input$checkFeature==3) gf=fread("./annotation/refGene_mm9_gb_sorted")
+                     if (input$checkFeature==4) gf=fread("./annotation/refGene_mm9_1stIntron")
+                     if (input$checkFeature==5) gf=fread("./annotation/refGene_mm9_gb_sorted")
                    }
-
                    
                    #methylome data load
                    roots=c('/'='/')
@@ -86,15 +76,20 @@ shinyServer(function(input, output, session) {
                      
                      if (input$checkFeature==2){
                        #MethMat=make_prematrix_gb(myfiles,as.character(input$checkGenome),gf)
+                       MethMat=make_prematrix_cgishores(myfiles,gf)
+                     }
+                     
+                     if (input$checkFeature==3){
+                       #MethMat=make_prematrix_gb(myfiles,as.character(input$checkGenome),gf)
                        MethMat=make_prematrix_gb(myfiles,gf)   
                      }
-
-                     if (input$checkFeature==3){
+                     
+                     if (input$checkFeature==4){
                        #MethMat=make_prematrix_1stIntron(myfiles,as.character(input$checkGenome),gf)
                        MethMat=make_prematrix_1stIntron(myfiles,gf)
                      }
                      
-                     if (input$checkFeature==4){
+                     if (input$checkFeature==5){
                        #MethMat=make_prematrix_promoter(myfiles,as.character(input$checkGenome),gf,input$PromoterStart,input$PromoterEnd)
                        MethMat=make_prematrix_promoter(myfiles,gf,input$PromoterStart,input$PromoterEnd)
                      }
@@ -110,16 +105,21 @@ shinyServer(function(input, output, session) {
                      
                      if (input$checkFeature==2){
                        #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
-                       MethMat=make_matrix_infinium(myfiles,gf,Infinium,input$checkFeature)
+                       MethMat=make_matrix_infinium_cgishores(myfiles,gf,Infinium,input$checkFeature)
                      }
                      
                      if (input$checkFeature==3){
                        #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
                        MethMat=make_matrix_infinium(myfiles,gf,Infinium,input$checkFeature)
                      }
-
                      
                      if (input$checkFeature==4){
+                       #MethMat=make_matrix_infinium(myfiles,as.character(input$checkGenome),gf,input$checkPlatform,input$checkFeature)
+                       MethMat=make_matrix_infinium(myfiles,gf,Infinium,input$checkFeature)
+                     }
+
+                     
+                     if (input$checkFeature==5){
                        #MethMat=make_matrix_infinium_promoter(myfiles,as.character(input$checkGenome),gf,input$checkPlatform, input$PromoterStart,input$PromoterEnd)
                        MethMat=make_matrix_infinium_promoter(myfiles, gf, Infinium,input$PromoterStart,input$PromoterEnd)
                      }
