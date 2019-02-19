@@ -17,8 +17,9 @@ shinyUI(dashboardPage(skin="green",
                       dashboardHeader(title = "MatrixMaker"),
                       dashboardSidebar(
                         sidebarMenu(
-                          menuItem("Parameters",  tabName = "parameters", icon = icon("th")),
-                          menuItem("README",      tabName = "readme",     icon = icon("th"))
+                          menuItem("Parameters",  tabName = "parameters", icon = icon("th"))
+                          #menuItem("Parameters",  tabName = "parameters", icon = icon("th")),
+                          #menuItem("README",      tabName = "readme",     icon = icon("th"))
                         )
                       ),
                       
@@ -79,12 +80,13 @@ shinyUI(dashboardPage(skin="green",
                                            downloadButton("MethMat", "Download")
                                     )
                                   )
-                          ),
+                           )
+                          #),
                           
                           
-                          tabItem(tabName = "readme",
-                                  h2("README")
-                          )
+                          #tabItem(tabName = "readme",
+                          #        h2("README")
+                          #)
                         )
                       )
 )
