@@ -54,9 +54,10 @@ shinyUI(dashboardPage(skin="green",
                                            radioButtons("checkFeature", 
                                                         label = h3("Select Feature"), 
                                                         choices = list("CGI"          = 1, 
-                                                                       "Gene body"    = 2, 
-                                                                       "1st intron"   = 3, 
-                                                                       "Promoter*"    = 4),
+                                                                       "CGI shore"    = 2, 
+                                                                       "Gene body"    = 3, 
+                                                                       "1st intron"   = 4, 
+                                                                       "Promoter*"    = 5),
                                                         
                                                         
                                                         selected = ""),
