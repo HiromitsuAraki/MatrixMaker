@@ -321,6 +321,88 @@ make_matrix_infinium_cgi <- function(LISTS,gf,Infinium,FEATURE){
 
 
 
+make_matrix_infinium_cgishores <- function(LISTS,gf,Infinium,FEATURE){
+  
+  #loading genomic feature coordinates
+  colnames(gf)=c("chr","start","end")
+  
+  gf_shores1=gf
+  gf_shores1$start=gf$start - 2000
+  gf_shores1$end  =gf$start - 1
+  
+  gf_shores2=gf
+  gf_shores2$start=gf$end +1
+  gf_shores2$end  =gf$end +2000
+  
+  annotations_gr=with(gf, GRanges(chr, IRanges(start, end)))
+  annotations_gr=subset(annotations_gr,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
+  
+  annotations_gr_shores1=with(gf_shores1, GRanges(chr, IRanges(start, end)))
+  annotations_gr_shores1=subset(annotations_gr_shores1,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
+  
+  annotations_gr_shores2=with(gf_shores2, GRanges(chr, IRanges(start, end)))
+  annotations_gr_shores2=subset(annotations_gr_shores2,!seqnames %in% "chrX" & !seqnames %in% "chrY")   ###removed SexChr
+  
+  
+  #loading methylome data (matrix)
+  dm0=fread(LISTS[1])
+  dm1_gr=Infinium[names(Infinium) %in% dm0$ID]
+  
+  fO=findOverlaps(dm1_gr,annotations_gr,ignore.strand=TRUE) ###gr=query, annotations_gr=subject
+  fO_shore1=findOverlaps(dm1_gr,annotations_gr_shores1,ignore.strand=TRUE)
+  fO_shore2=findOverlaps(dm1_gr,annotations_gr_shores2,ignore.strand=TRUE)
+  
+  dm1_annotation=dm1_gr[attributes(fO)$from,]               ### selection of data
+  y1=dm1_gr[attributes(fO_shore1)$from,]
+  y2=dm1_gr[attributes(fO_shore2)$from,]
+  
+  annotation_coordinates =annotations_gr[attributes(fO)$to,]         ## selection of annotation
+  annotation_coordinates1=annotations_gr[attributes(fO_shore1)$to,]  #######annotations_gr 
+  annotation_coordinates2=annotations_gr[attributes(fO_shore2)$to,]  #######annotations_gr
+  
+  dm1_annotation=data.frame(ranges(dm1_annotation),ID_REF=names(dm1_annotation))
+  y1=data.frame(ranges(y1),ID_REF=names(y1))
+  y2=data.frame(ranges(y2),ID_REF=names(y2))
+  
+  z =cbind(as.data.frame(dm1_annotation),as.data.frame(annotation_coordinates))
+  z1=cbind(as.data.frame(y1),as.data.frame(annotation_coordinates1))
+  z2=cbind(as.data.frame(y2),as.data.frame(annotation_coordinates2))
+  z1_z2=rbind(z1,z2)
+  
+  
+  z1_z2_uniq=unique(z1_z2[,c(5,6,7,8)])
+  xxx1_xxx2=merge(z1_z2_uniq,dm0,by.x="ID_REF",by.y="ID",all = F)
+  xxx1_xxx2=data.frame(loci=paste(xxx1_xxx2$seqnames,xxx1_xxx2$start,xxx1_xxx2$end,"CGI",sep="__"),xxx1_xxx2)
+  yyy1_yyy2=xxx1_xxx2[,c(1,6:ncol(xxx1_xxx2))]
+  yyy1_yyy2_naomit=na.omit(yyy1_yyy2)
+  zzz1_zzz2<-yyy1_yyy2_naomit %>%
+    dplyr::group_by(loci) %>%
+    dplyr::summarise_at(dplyr::funs(mean),.vars=colnames(yyy1_yyy2_naomit)[c(2:ncol(yyy1_yyy2_naomit))])
+  
+  targetloci=matrix(unlist(strsplit(as.matrix(zzz1_zzz2[,1]), "__")),ncol=4,byrow=T)
+  datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(zzz1_zzz2[,c(2:ncol(zzz1_zzz2))],2))
+  
+  #z2=unique(z[,c(5,6,7,8)])
+  #xxx2=merge(z2,dm0,by.x="ID_REF",by.y="ID",all = F)
+  #xxx2=data.frame(loci=paste(xxx2$seqnames,xxx2$start,xxx2$end,"CGI",sep="__"),xxx2)
+  #xxx3=xxx2[,c(1,6:ncol(xxx2))]
+  
+  #xxx3_naomit=na.omit(xxx3)
+  #xxx4<-xxx3_naomit %>%
+  #  dplyr::group_by(loci) %>%
+  #  dplyr::summarise_at(dplyr::funs(mean),.vars=colnames(xxx3_naomit)[c(2:ncol(xxx3_naomit))])
+  
+  #targetloci=matrix(unlist(strsplit(as.matrix(xxx4[,1]), "__")),ncol=4,byrow=T)
+  #datamat=data.frame(chr=targetloci[,1],Start=targetloci[,2],End=targetloci[,3],Symbol=targetloci[,4],round(xxx4[,c(2:ncol(xxx4))],2))
+  
+  
+   return(na.omit(datamat))
+  
+  
+}
+
+
+
 #gene body or 1st intron
 make_matrix_infinium <- function(LISTS,gf,Infinium,FEATURE){
   
